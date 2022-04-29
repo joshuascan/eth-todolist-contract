@@ -4,7 +4,7 @@ async function main() {
 
   await todoList.deployed();
 
-  console.log("Todolist deployed to:", todoList.address);
+  console.log("TodoList deployed to:", todoList.address);
 }
 
 main()

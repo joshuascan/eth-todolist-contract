@@ -3,43 +3,44 @@ pragma solidity ^0.8.13;
 
 contract TodoList {
     
-    uint taskCount = 0;
-
     struct Task {
-        uint id;
-        string content;
+        string description;
         bool completed;
+        uint timestamp;
     }
 
-    mapping(uint => Task) public tasks;
+    mapping(address => Task[]) private accounts;
 
     event TaskCreated(
-        uint id,
-        string content,
-        bool completed
+        string description,
+        bool completed,
+        uint timestamp
     );
 
     event TaskCompleted(
-        uint id,
         bool completed
     );
 
-    function createTask(string memory _content) public {
-        taskCount++;
-        tasks[taskCount] = Task({
-            id: taskCount,
-            content: _content,
-            completed: false
-        });
+    function createTask(string memory _description) external {
+        uint _timestamp = block.timestamp;
+        accounts[msg.sender].push(Task({
+            description: _description,
+            completed: false,
+            timestamp: _timestamp
+        }));
 
-        emit TaskCreated(taskCount, _content, false);
+        emit TaskCreated(_description, false, _timestamp);
     }
 
-    function toggleCompleted(uint _taskId) public {
-        Task memory _task = tasks[_taskId];
-        _task.completed = !_task.completed;
-        tasks[_taskId] = _task;
+    function getTasks() external view returns (Task[] memory) {
+        return accounts[msg.sender];
+    }
 
-        emit TaskCompleted(_taskId, _task.completed);
+    function toggleCompleted(uint _index) external {
+        Task memory _task = accounts[msg.sender][_index];
+        _task.completed = !_task.completed;
+        accounts[msg.sender][_index].completed = _task.completed;
+        
+        emit TaskCompleted(_task.completed);
     }
 }
