@@ -21,7 +21,7 @@ contract TodoList {
         bool completed
     );
 
-    function createTask(string memory _description) external {
+    function createTask(string calldata _description) external {
         uint _timestamp = block.timestamp;
         accounts[msg.sender].push(Task({
             description: _description,
@@ -32,7 +32,7 @@ contract TodoList {
         emit TaskCreated(_description, false, _timestamp);
     }
 
-    function getTasks() external view returns (Task[] memory) {
+    function getTasks() public view returns (Task[] memory) {
         return accounts[msg.sender];
     }
 
