@@ -1,15 +1,17 @@
-# Basic Sample Hardhat Project
+# Ethereum Todolist App
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Contract for a to-do list app, written in solidity and using the Hardhat Ethereum development environment.
 
-Try running some of the following tasks:
+_Corresponding frontend code can be found [here](https://github.com/joshuascan/eth-todolist-frontend)_
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+## Required Environment Variables for Deployment
+
+If deploying this app, you will need to create a .env and include the follow variables:
+
+- ALCHEMY_API_URL= _Sign up at [alchemy](https://www.alchemy.com/) and create a new project on the Rinkeby test net_
+- PRIVATE_KEY= _Your wallet private key_
+
+## To Deploy
+
+1. Run "npx hardhat compile"
+2. Run "npx hardhat run scripts/deploy.js --network rinkeby"
